@@ -3,6 +3,8 @@ from .serializers import PostSerializer
 from .models import Post
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from settings.permissions import IsOwnerOrReadOnly
+from rest_framework import permissions
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -19,3 +21,4 @@ class PostViewSet(viewsets.ModelViewSet):
         post = get_object_or_404(queryset, id=id)
         serializer = PostSerializer(post)
         return Response(serializer.data)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

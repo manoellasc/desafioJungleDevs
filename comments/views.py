@@ -3,6 +3,8 @@ from .serializers import CommentSerializer
 from .models import Comment
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from settings.permissions import IsOwnerOrReadOnly
+from rest_framework import permissions
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -19,3 +21,4 @@ class CommentViewSet(viewsets.ModelViewSet):
         comment = get_object_or_404(queryset, id=id)
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

@@ -1,11 +1,10 @@
 from django.db import models
-from django.conf import settings
-
+from django_currentuser.db.models import CurrentUserField
 
 class Topic(models.Model):
     name = models.CharField(max_length=60)
     title = models.CharField(max_length=60)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = CurrentUserField()
     description = models.CharField(max_length=60)
     urlname = models.SlugField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
